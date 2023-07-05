@@ -1,0 +1,16 @@
+<launch>
+
+    <rosparam file="$(find spyzr_controller)/config/joystick.yaml" command="load" />
+
+    <node pkg="joy_teleop" type="joy_teleop.py" name="joy_teleop"/>
+  
+    <node pkg="joy" type="joy_node" name="joystick">
+      <param name="autorepeat_rate" value="20" />
+    </node>
+
+    <node pkg="rosserial_arduino" type="serial_node.py" name= "serial_interface" respawn="true" output="screen">
+            <param name="port" value="/dev/ttyACM0" />
+    </node>
+ 
+      
+</launch>
