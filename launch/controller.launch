@@ -1,0 +1,24 @@
+<launch>
+      <arg name="radius" default="0.04"/>
+      <arg name="width_separation" default="0.2916"/>
+      <arg name="length_separation" default="0.22"/>
+
+      <rosparam file="$(find spyzr_controller)/config/simple_controller.yaml" command="load"/>
+      <rosparam file="$(find joint_state_controller)/joint_state_controller.yaml" command="load"/>
+
+      <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" 
+            respawn="false" output="screen"/>
+
+      <node name="controller_manager" pkg="controller_manager" type="spawner"
+            respawn="false" output="screen" args=" wheel_front_right_controller wheel_front_left_controller wheel_rear_right_controller wheel_rear_left_controller joint_state_controller"/>
+      
+      <node pkg="spyzr_controller" type="simple_controller_node" name="simple_controller_node"
+            respawn="true" output="screen">
+            <param name="radius" value="$(arg radius)"/>      
+            <param name="width_separation" value="$(arg width_separation)"/>      
+            <param name="length_separation" value="$(arg length_separation)"/>      
+  
+      </node>
+      
+      
+</launch>
